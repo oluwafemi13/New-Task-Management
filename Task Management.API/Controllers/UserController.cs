@@ -1,4 +1,5 @@
-﻿using Management.Application.Models;
+﻿using Management.Application.DTO;
+using Management.Application.Models;
 using Management.Core.Entities;
 using Management.Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
@@ -18,23 +19,26 @@ namespace Task_Management_System.Controllers
         }
 
         [HttpPost("CreateUser")]
-        public async Task<ActionResult> CreateUser(User user)
+        public async Task<ActionResult> CreateUser(UserDTO user)
         {
-            try
-            {
+            if(!ModelState.IsValid)
+              {
+                return BadRequest(user); 
+              }
                 var create = await _service.CreateUser(user);
                 return Ok(create);
-            }
-            catch (Exception)
-            {
 
-                throw;
-            }
+
+
 
         }
         [HttpPut("UpdateUser")]
-        public async Task<ActionResult> UpdateUser(int Id, User user)
+        public async Task<ActionResult> UpdateUser(int Id, UserDTO user)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(user);
+            }
             var update = await _service.Update(user, Id);
             return Ok(update);
         }

@@ -1,4 +1,5 @@
 ﻿using Management.Application.Contracts;
+using Management.Application.DTO;
 using Management.Application.Models;
 using Management.Core.Entities;
 using System;
@@ -19,13 +20,20 @@ namespace Management.Infrastructure.Services.Business_Logic
             _repo = repo;
         }
 
-        public async Task<Reponse> CreateUser(User user)
+        public async Task<Reponse> CreateUser(UserDTO user)
         {
             try
             {
-                //var search = _repo.GetByEmailAsync(user.Email);
-                
-                    await _repo.CreateAsync(user);
+                var search = _repo.GetByEmailAsync(user.Email);
+
+                if(search == null)
+                {
+                    var newUser = new User
+                    {
+                        Email = user.Email,
+                        Name = user.Name,
+                    };
+                    await _repo.CreateAsync(newUser);
                     return new Reponse
                     {
                         Data = JsonSerializer.Serialize(user),
@@ -33,6 +41,18 @@ namespace Management.Infrastructure.Services.Business_Logic
                         ReasonPhrase = "Created",
                         ResponseCode = 201
                     };
+                }
+                else
+                {
+                    return new Reponse
+                    {
+                        Data = JsonSerializer.Serialize(user),
+                        IsSuccess = true,
+                        ReasonPhrase = "User Already Exist",
+                        ResponseCode = 400
+                    };
+                }
+                
                 
                 
             }
@@ -66,7 +86,7 @@ namespace Management.Infrastructure.Services.Business_Logic
             };
         }
 
-        public async Task<Reponse> Update(User user, int Id)
+        public async Task<Reponse> Update(UserDTO user, int Id)
         {
             var search = await _repo.GetAsync(Id);
             if (search == null)

@@ -9,8 +9,9 @@ namespace Management.Application.DTO
 {
     public class UserDTO
     {
+        [Required(ErrorMessage ="Please Enter a Name")]
         public string Name { get; set; }
-        [EmailAddress]
+        [EmailAddress(ErrorMessage ="Enter a valid Email")]
         public string Email { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Management.Application.Models;
+﻿using Management.Application.DTO;
+using Management.Application.Models;
 using Management.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace Management.Infrastructure.Services
 {
     public interface IUserservice
     {
-        Task<Reponse> Update(User user, int Id);
+        Task<Reponse> Update(UserDTO user, int Id);
         Task<Reponse> DeleteUser(int Id);
-        Task<Reponse> CreateUser(User user);
+        Task<Reponse> CreateUser(UserDTO user);
         Task<IEnumerable<User>> GetAll(RequestParameters parameter);
     }
 }
