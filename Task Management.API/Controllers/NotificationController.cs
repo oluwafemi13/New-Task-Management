@@ -3,6 +3,7 @@ using Management.Core.Entities;
 using Management.Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Task_Management.Application.DTO;
 
 namespace Task_Management_System.Controllers
 {
@@ -18,7 +19,7 @@ namespace Task_Management_System.Controllers
         }
 
         [HttpPost("CreateNotification")]
-        public async Task<ActionResult> CreateNotification(Notification notification)
+        public async Task<ActionResult> CreateNotification(NotificationDTO notification)
         {
             try
             {
