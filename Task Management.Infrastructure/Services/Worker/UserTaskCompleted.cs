@@ -33,11 +33,15 @@ namespace Management.Infrastructure.Services.Worker
                 {
                     foreach (var task in completedTask)
                     {
-                        Console.WriteLine($"Task{task.Title} with user {task.UserId} Has been completed ");
+                        //Console.WriteLine($"Task{task.Title} with user {task.UserId} Has been completed ");
                         _logger.LogInformation($"Task{task.Title} with user {task.UserId} Has been completed");
+                        await System.Threading.Tasks.Task.Delay(10000);
                     }
 
-                    await System.Threading.Tasks.Task.Delay(6000);
+                }
+                else
+                {
+                    break;
                 }
 
             }

@@ -30,7 +30,7 @@ namespace Management.Infrastructure.Services
                 {
                     NotificationId = notification.NotificationId,
                     Message= notification.Message,
-                    Read = notification.Read,
+                    Read = false,
                     TimeStamp= notification.TimeStamp,
                     Type= notification.Type
                 };
@@ -163,7 +163,7 @@ namespace Management.Infrastructure.Services
             }
             search.NotificationId = Id;
             search.Read = notification.Read;
-            search.TimeStamp = notification.TimeStamp;
+            //.TimeStamp = notification.TimeStamp;
             search.Message = notification.Message;
             search.Type = notification.Type;
             

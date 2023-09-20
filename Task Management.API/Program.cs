@@ -8,6 +8,7 @@ using Management.Infrastructure.Services.Worker;
 using Management.Infrastructure.Services.Worker.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Task_Management.Infrastructure.Services.Worker.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,7 @@ builder.Services.AddDbContext<DatabaseContext>(option =>
 
 builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
-builder.Services.AddScoped<IWorker, MarkedComplete>();
+builder.Services.AddScoped<IMarkedComplete, MarkedComplete>();
 builder.Services.AddScoped<IWorker, UserTaskCompleted>();
 builder.Services.AddScoped<IWorker, AssignedNewTask>();
 builder.Services.AddHostedService<MarkedCompletedService>();

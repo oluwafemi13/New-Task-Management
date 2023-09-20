@@ -18,7 +18,7 @@ namespace Task_Management.Application.DTO
         [Required(ErrorMessage = "Please input a value for the notification Type"), StringLength(100)]
         public string Message { get; set; }
         public DateTime TimeStamp { get; set; }
-        [IgnoreDataMember]
-        public bool Read { get; set; } = false;
+        
+        public bool Read { get; set; }
     }
 }
