@@ -12,7 +12,7 @@ namespace Management.Infrastructure.Services
     public interface INotificationService
     {
         Task<IEnumerable<Notification>> GetAll(RequestParameters parameter);
-        Task<Reponse> Update(Notification notification, int Id);
+        Task<Reponse> Update(NotificationDTO notification, int Id);
         Task<Reponse> DeleteNotification(int Id);
         Task<Reponse> CreateNotification(NotificationDTO notification);
         Task<Reponse> GetNotificationById(int UserId);

@@ -148,7 +148,7 @@ namespace Management.Infrastructure.Services
             }
         }
 
-        public async Task<Reponse> Update(Notification notification, int Id)
+        public async Task<Reponse> Update(NotificationDTO notification, int Id)
         {
             var search = await _repo.GetAsync(Id);
             if(search == null)

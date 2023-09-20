@@ -21,21 +21,24 @@ namespace Task_Management_System.Controllers
         [HttpPost("CreateNotification")]
         public async Task<ActionResult> CreateNotification(NotificationDTO notification)
         {
-            try
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            else
             {
                 var create = await _service.CreateNotification(notification);
                 return Ok(create);
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
+           
         }
         [HttpPut("UpdateNotification")]
-        public async Task<ActionResult> UpdateNotification(int Id, Notification notification)
+        public async Task<ActionResult> UpdateNotification(int Id, NotificationDTO notification)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             var update = await _service.Update(notification, Id);
             return Ok(update);
         }

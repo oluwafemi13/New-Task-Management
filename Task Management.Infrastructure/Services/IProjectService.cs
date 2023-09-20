@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Task_Management.Application.DTO;
 
 namespace Management.Infrastructure.Services
 {
@@ -15,7 +16,7 @@ namespace Management.Infrastructure.Services
         Task<IEnumerable<Project>> GetAll(RequestParameters parameter);
         Task<Reponse> Update(Project project, int Id);
         Task<Reponse> DeleteProject(int Id);
-        Task<Reponse> CreateProject(Project project);
+        Task<Reponse> CreateProject(ProjectDTO project);
         Task<Reponse> GetProjectByUser(string UserId);
 
     }

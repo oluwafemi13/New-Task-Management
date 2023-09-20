@@ -3,6 +3,7 @@ using Management.Core.Entities;
 using Management.Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Task_Management.Application.DTO;
 
 namespace Task_Management_System.Controllers
 {
@@ -19,18 +20,18 @@ namespace Task_Management_System.Controllers
         }
 
         [HttpPost("CreateProject")]
-        public async Task<ActionResult> CreateProject(Project project)
+        public async Task<ActionResult> CreateProject(ProjectDTO project)
         {
-            try
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
             {
                 var create = await _service.CreateProject(project);
                 return Ok(create);
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            
             
         }
         [HttpPut("UpdateProject")]

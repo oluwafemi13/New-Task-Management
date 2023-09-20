@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Task_Management.Application.DTO;
 
 namespace Management.Infrastructure.Services
 {
@@ -23,17 +24,30 @@ namespace Management.Infrastructure.Services
             _projectRepo = projectRepo;
         }
 
-        public async Task<Reponse> CreateProject(Project project)
+        public async Task<Reponse> CreateProject(ProjectDTO project)
         {
-            await _projectRepo.CreateAsync(project);
-            return new Reponse
+            try
             {
-                Data = JsonSerializer.Serialize(project),
-                IsSuccess = true,
-                ReasonPhrase = "Created",
-                ResponseCode = 201
-            };
-            
+                var newProject = new Project
+                {
+                    ProjectId = project.ProjectId,
+                    Description = project.Description,
+                    Name = project.Name
+                };
+                await _projectRepo.CreateAsync(newProject);
+                return new Reponse
+                {
+                    Data = JsonSerializer.Serialize(project),
+                    IsSuccess = true,
+                    ReasonPhrase = "Created",
+                    ResponseCode = 201
+                };
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public async Task<Reponse> DeleteProject(int Id)
