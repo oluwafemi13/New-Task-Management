@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Task_Management.Application.DTO;
 
 namespace Management.Infrastructure.Services
 {
@@ -13,7 +14,7 @@ namespace Management.Infrastructure.Services
         Task<IEnumerable<Notification>> GetAll(RequestParameters parameter);
         Task<Reponse> Update(Notification notification, int Id);
         Task<Reponse> DeleteNotification(int Id);
-        Task<Reponse> CreateNotification(Notification notification);
+        Task<Reponse> CreateNotification(NotificationDTO notification);
         Task<Reponse> GetNotificationById(int UserId);
         Task<Reponse> MarkAsRead(int Id);
     }

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Task_Management.Application.DTO;
 
 namespace Management.Infrastructure.Services
 {
@@ -21,11 +22,19 @@ namespace Management.Infrastructure.Services
             _repo = repo;
         }
 
-        public async Task<Reponse> CreateNotification(Notification notification)
+        public async Task<Reponse> CreateNotification(NotificationDTO notification)
         {
             try
             {
-                await _repo.CreateAsync(notification);
+                var notify = new Notification
+                {
+                    NotificationId = notification.NotificationId,
+                    Message= notification.Message,
+                    Read = notification.Read,
+                    TimeStamp= notification.TimeStamp,
+                    Type= notification.Type
+                };
+                await _repo.CreateAsync(notify);
                 return new Reponse
                 {
                     Data = JsonSerializer.Serialize(notification),
@@ -50,7 +59,7 @@ namespace Management.Infrastructure.Services
                 await _repo.DeleteAsync(search);
                 return new Reponse
                 {
-                    Data = search,
+                    Data = search.NotificationId,
                     IsSuccess = true,
                     ReasonPhrase = "Successful",
                     ResponseCode = 200
