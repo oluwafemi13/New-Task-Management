@@ -1,6 +1,7 @@
 ﻿using Management.Application.Contracts;
 using Management.Application.Models;
 using Management.Core.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -16,10 +17,12 @@ namespace Management.Infrastructure.Services
     public class NotificationService : INotificationService
     {
         private readonly INotificationRepository _repo;
+        private readonly IHttpContextAccessor _accessor;
 
-        public NotificationService(INotificationRepository repo)
+        public NotificationService(INotificationRepository repo, IHttpContextAccessor accessor)
         {
             _repo = repo;
+            _accessor = accessor;
         }
 
         public async Task<Reponse> CreateNotification(NotificationDTO notification)
@@ -158,7 +161,7 @@ namespace Management.Infrastructure.Services
                     Data = null,
                     IsSuccess = false,
                     ReasonPhrase = "Data Not Found",
-                    ResponseCode = 404
+                    ResponseCode = 400
                 };
             }
             search.NotificationId = Id;

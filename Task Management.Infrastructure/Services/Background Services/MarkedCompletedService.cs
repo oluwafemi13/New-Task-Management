@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Task_Management.Infrastructure.Services.Worker.Interface;
 
 namespace Management.Infrastructure.Services.Background_Services
 {
@@ -42,7 +43,7 @@ namespace Management.Infrastructure.Services.Background_Services
                 $"{nameof(MarkedCompletedService)} is working.");
 
             using var scope = _serviceProvider.CreateScope();
-            var workService = scope.ServiceProvider.GetRequiredService<IWorker>();
+            var workService = scope.ServiceProvider.GetRequiredService<IMarkedComplete>();
                 
                 await workService.DoWorkAsync(stoppingToken);
 
