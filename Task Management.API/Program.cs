@@ -15,25 +15,25 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddDbContext<DatabaseContext>(option =>
-{
-    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
-});
+    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient, ServiceLifetime.Transient);
+
+
 
 builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-builder.Services.AddScoped<ITaskRepository, TaskRepository>();
-builder.Services.AddScoped<IMarkedComplete, MarkedComplete>();
-builder.Services.AddScoped<IWorker, UserTaskCompleted>();
-builder.Services.AddScoped<IWorker, AssignedNewTask>();
+builder.Services.AddTransient<ITaskRepository, TaskRepository>();
+builder.Services.AddTransient<IMarkedComplete, MarkedComplete>();
+builder.Services.AddTransient<IWorker, UserTaskCompleted>();
+builder.Services.AddTransient<IWorker, AssignedNewTask>();
 builder.Services.AddHostedService<MarkedCompletedService>();
 builder.Services.AddHostedService<AssignedNewTaskService>();
 builder.Services.AddHostedService<MarkedUserTaskCompleted>();
-builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
-builder.Services.AddScoped<IProjectService, ProjectService>();
-builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
-builder.Services.AddScoped<IUserservice, UserService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
+builder.Services.AddTransient<IProjectService, ProjectService>();
+builder.Services.AddTransient<INotificationRepository, NotificationRepository>();
+builder.Services.AddTransient<INotificationService, NotificationService>();
+builder.Services.AddTransient<IUserservice, UserService>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddControllers();
 
 

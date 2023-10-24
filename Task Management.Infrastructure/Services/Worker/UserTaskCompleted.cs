@@ -16,18 +16,16 @@ namespace Management.Infrastructure.Services.Worker
         private readonly ITaskRepository _taskRepo;
         private readonly IServiceProvider _serviceProvider;
 
-        public UserTaskCompleted(ILogger<UserTaskCompleted> logger, ITaskRepository taskRepo, IServiceProvider serviceProvider)
+        public UserTaskCompleted(ILogger<UserTaskCompleted> logger, ITaskRepository taskRepo /*IServiceProvider serviceProvider*/)
         {
             _logger = logger;
             //_complete= complete;
             _taskRepo = taskRepo;
-            _serviceProvider = serviceProvider;
+           // _serviceProvider = serviceProvider;
         }
         public async System.Threading.Tasks.Task DoWorkAsync(CancellationToken cancellationToken)
         {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-
+    
                 var completedTask = await _taskRepo.GetTaskByRead();
                 if (completedTask != null)
                 {
@@ -41,10 +39,10 @@ namespace Management.Infrastructure.Services.Worker
                 }
                 else
                 {
-                    break;
+                await System.Threading.Tasks.Task.CompletedTask;
                 }
 
-            }
+            
             await System.Threading.Tasks.Task.CompletedTask;
         }
         }

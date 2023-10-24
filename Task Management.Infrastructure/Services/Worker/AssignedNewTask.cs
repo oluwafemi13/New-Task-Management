@@ -20,9 +20,7 @@ namespace Management.Infrastructure.Services.Worker
         }
         public async Task DoWorkAsync(CancellationToken cancellationToken)
         {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-
+           
                 var tasks = await _taskRepo.GetAllTimedTask();
                 foreach (var task in tasks)
                 {
@@ -41,8 +39,6 @@ namespace Management.Infrastructure.Services.Worker
 
 
                 }
-            }
-            
             await Task.CompletedTask;
         }
     }

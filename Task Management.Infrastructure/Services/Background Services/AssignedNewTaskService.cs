@@ -1,4 +1,5 @@
 ﻿using Management.Infrastructure.Services.Worker.Interface;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -12,37 +13,29 @@ namespace Management.Infrastructure.Services.Background_Services
 {
     public class AssignedNewTaskService : BackgroundService
     {
-        private readonly IServiceProvider _serviceProvider;
+        //private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<AssignedNewTaskService> _logger;
-        public AssignedNewTaskService(ILogger<AssignedNewTaskService> logger, IServiceProvider serviceProvider)
+        private readonly IWorker _worker;
+        public AssignedNewTaskService(ILogger<AssignedNewTaskService> logger, IWorker worker)
         {
 
             _logger = logger;
+            _worker = worker;
 
-            _serviceProvider = serviceProvider;
+           
         }
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-
-            await DoWork(stoppingToken);
-
-        }
-
-
-
-        private async Task DoWork(CancellationToken stoppingToken)
-        {
-            _logger.LogInformation(
+            while(stoppingToken.IsCancellationRequested)
+            {
+                _logger.LogInformation(
                 $"{nameof(AssignedNewTaskService)} is working.");
-
-            using var scope = _serviceProvider.CreateScope();
-            var workService = scope.ServiceProvider.GetRequiredService<IWorker>();
-
-            await workService.DoWorkAsync(stoppingToken);
-
-
+                await _worker.DoWorkAsync(stoppingToken);
+                await Task.Delay(2000);
+            }
+            
 
         }
-
+      
     }
 }

@@ -17,12 +17,12 @@ namespace Management.Infrastructure.Services
     public class NotificationService : INotificationService
     {
         private readonly INotificationRepository _repo;
-        private readonly IHttpContextAccessor _accessor;
+        
 
-        public NotificationService(INotificationRepository repo, IHttpContextAccessor accessor)
+        public NotificationService(INotificationRepository repo)
         {
             _repo = repo;
-            _accessor = accessor;
+           
         }
 
         public async Task<Reponse> CreateNotification(NotificationDTO notification)
